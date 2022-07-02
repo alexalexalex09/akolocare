@@ -1,9 +1,18 @@
-var express = require("express");
+const express = require("express");
 var router = express.Router();
+const CR = require("../models/crs.js");
 
 /* Create CR */
 router.get("/createCR", function (req, res, next) {
-  res.send("creating CR");
+  const CR = new CR({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    notes: [],
+    actions: [],
+  });
+  CR.save().then((theCR) => {
+    res.send("created CR");
+  });
 });
 
 /* Read CR */
