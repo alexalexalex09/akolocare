@@ -1,8 +1,11 @@
+require("dotenv").config();
 var createError = require("http-errors");
 var express = require("express");
+const session = require("express-session");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var compression = require("compression");
 require("./mongo.js"); //Start the mongo connection
 
 var indexRouter = require("./routes/index");
@@ -13,7 +16,7 @@ var app = express();
 
 // Mongo setup
 //Replace MemoryStore
-const MongoStore = require("connect-mongo").default;
+const MongoStore = require("connect-mongo");
 var sess = {
   secret: process.env.CONNECT_MONGO_SECRET,
   saveUninitialized: true, // create session before something stored

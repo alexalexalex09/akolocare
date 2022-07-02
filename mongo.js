@@ -2,10 +2,6 @@ let mongoose = require("mongoose");
 
 var mongoDB = process.env.mongo;
 mongoose.connect(mongoDB, {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
   w: "majority",
   family: 4,
 });
