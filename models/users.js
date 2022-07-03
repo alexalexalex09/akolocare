@@ -7,7 +7,9 @@ var UserSchema = new Schema(
   {
     firstName: String,
     lastName: String,
+    profile_id: String,
     darkMode: Boolean,
+    organization: Schema.Types.ObjectId,
   },
   { collection: "users" }
 );

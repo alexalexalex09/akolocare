@@ -3,18 +3,16 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 //Create schema
-var CRSchema = new Schema(
+var OrganizationSchema = new Schema(
   {
-    organization: Scheme.Types.ObjectId,
-    firstName: String,
-    lastName: String,
-    notes: [{ note: String, date: String }],
-    actions: [{ id: Schema.Types.ObjectId }],
+    name: String,
+    owner: Schema.Types.ObjectId,
+    code: String,
   },
-  { collection: "crs" }
+  { collection: "organizations" }
 );
 
-module.exports = mongoose.model("CR", CRSchema);
+module.exports = mongoose.model("Organization", OrganizationSchema);
 /*
 
 //Export function to create "SomeModel" model class
