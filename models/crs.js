@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var CRSchema = new Schema(
   {
     organization: Scheme.Types.ObjectId,
+    owner: Scheme.Types.ObjectId,
     firstName: String,
     lastName: String,
     notes: [{ note: String, date: String }],

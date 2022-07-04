@@ -1,25 +1,19 @@
-//These are individual actions that have been created from ActionTemplates and assigned to specific CRs
+//These are templates for actions that can be copied and assigned to CRs
 //Set up mongoose connection
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 //Create schema
-var ActionSchema = new Schema(
+var templateSchema = new Schema(
   {
     name: String,
     description: String,
-    startDate: String,
-    completed: Boolean,
-    archived: Boolean,
-    CR: Schema.Types.ObjectId,
-    steps: [
-      { name: String, day: Number, required: Boolean, completed: String },
-    ],
+    steps: [{ name: String, day: Number, required: Boolean }],
   },
-  { collection: "actions" }
+  { collection: "templates" }
 );
 
-module.exports = mongoose.model("Action", ActionSchema);
+module.exports = mongoose.model("template", templateSchema);
 /*
 
 //Export function to create "SomeModel" model class
