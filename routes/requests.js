@@ -35,3 +35,5 @@ router.get("/getAllCRs", function (req, res, next) {
     });
   });
 });
+
+module.exports = router;

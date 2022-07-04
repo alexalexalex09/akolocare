@@ -10,7 +10,7 @@ require("./mongo.js"); //Start the mongo connection
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var crudRouter = require("./routes/crud");
+var requestsRouter = require("./routes/requests");
 
 var app = express();
 
@@ -63,10 +63,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/crud", crudRouter);
+app.use("/r", requestsRouter);
 app.use("/users", usersRouter);
 
+app.use("/", indexRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

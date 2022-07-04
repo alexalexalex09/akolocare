@@ -1,5 +1,5 @@
 window.addEventListener("load", function () {
-  acfetch("/getAllCRs", "", function (res) {
+  acfetch("/r/getAllCRs", "", function (res) {
     displayCRs();
   });
 });

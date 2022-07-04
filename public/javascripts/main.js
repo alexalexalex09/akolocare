@@ -20,9 +20,7 @@ function acfetch(req, body, handler, errorHandler) {
       "Content-Type": "application/json",
     },
   };
-  startLoader();
   fetch(req, options).then(function (response) {
-    finishLoader();
     return response.json().then((res) => {
       if (res.err) {
         if (errorHandler) {

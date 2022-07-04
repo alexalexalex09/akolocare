@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 //Create schema
 var CRSchema = new Schema(
   {
-    organization: Scheme.Types.ObjectId,
-    owner: Scheme.Types.ObjectId,
+    organization: Schema.Types.ObjectId,
+    owner: Schema.Types.ObjectId,
     firstName: String,
     lastName: String,
     notes: [{ note: String, date: String }],
