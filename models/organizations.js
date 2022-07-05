@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var OrganizationSchema = new Schema(
   {
     name: String,
-    owner: Schema.Types.ObjectId,
+    owner: { type: Schema.Types.ObjectId, ref: "User" },
     code: String,
   },
   { collection: "organizations" }

@@ -9,7 +9,7 @@ var UserSchema = new Schema(
     lastName: String,
     profile_id: String,
     darkMode: Boolean,
-    organizations: [Schema.Types.ObjectId],
+    organizations: [{ type: Schema.Types.ObjectId, ref: "Organization" }],
   },
   { collection: "users" }
 );

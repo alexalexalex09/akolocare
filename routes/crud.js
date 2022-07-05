@@ -34,15 +34,23 @@ const cr = {
     ) {
       return ERR_PARAM;
     }
-    const CR = new CR({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      notes: [],
-      actions: [],
+    var body = req.body;
+    console.log({ body });
+    const promise = new Promise(function (resolve, reject) {
+      User.findOne({ profile_id: req.user.id }, function (err, curUser) {
+        var newCR = new CR({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          owner: curUser._id,
+          notes: [],
+          actions: [],
+        });
+        newCR.save().then((theCR) => {
+          resolve(theCR);
+        });
+      });
     });
-    CR.save().then((theCR) => {
-      return theCR;
-    });
+    return promise;
   },
 
   /* Read CR */

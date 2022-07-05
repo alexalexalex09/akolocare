@@ -7,10 +7,14 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var compression = require("compression");
 require("./mongo.js"); //Start the mongo connection
+var passport = require("passport"); //Auth
+var GoogleStrategy = require("passport-google-oauth20").Strategy; //Auth strategy for passport
+const User = require("./models/users.js"); //Need for auth
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var requestsRouter = require("./routes/requests");
+var authRouter = require("./routes/auth");
 
 var app = express();
 
@@ -44,6 +48,34 @@ app.use(session(sess));
 //app.use(requireHTTPS);
 app.use(compression());
 
+//Auth
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      User.findOneAndUpdate(
+        { profile_id: profile.id },
+        { $set: { profile_id: profile.id } },
+        { upsert: true }
+      ).exec(function (err, curUser) {
+        return cb(err, profile);
+      });
+    }
+  )
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Use HTTPS if appropriate
 app.get("*", async function (req, res, next) {
   if (req.headers.host.indexOf(":3000") == -1 && !req.secure) {
@@ -65,7 +97,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/r", requestsRouter);
 app.use("/users", usersRouter);
-
+app.use("/", authRouter);
 app.use("/", indexRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

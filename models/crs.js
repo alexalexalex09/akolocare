@@ -5,12 +5,12 @@ var Schema = mongoose.Schema;
 //Create schema
 var CRSchema = new Schema(
   {
-    organization: Schema.Types.ObjectId,
-    owner: Schema.Types.ObjectId,
+    organization: { type: Schema.Types.ObjectId, ref: "Organization" },
+    owner: { type: Schema.Types.ObjectId, ref: "User" },
     firstName: String,
     lastName: String,
     notes: [{ note: String, date: String }],
-    actions: [{ id: Schema.Types.ObjectId }],
+    plans: [{ id: { type: Schema.Types.ObjectId, ref: "Plan" } }],
   },
   { collection: "crs" }
 );

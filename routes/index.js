@@ -8,7 +8,11 @@ router.get("/", function (req, res, next) {
 
 /* GET dashboard. */
 router.get("/dashboard", function (req, res, next) {
-  res.render("dashboard", { title: "AkoloCare Dashboard" });
+  if (req.user) {
+    res.render("dashboard", { title: "AkoloCare Dashboard" });
+  } else {
+    res.redirect("/?error=not_logged_in");
+  }
 });
 
 /* GET privacy/tos. */

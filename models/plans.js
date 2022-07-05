@@ -11,7 +11,7 @@ var planSchema = new Schema(
     startDate: String,
     completed: Boolean,
     archived: Boolean,
-    CR: Schema.Types.ObjectId,
+    CR: { type: Schema.Types.ObjectId, ref: "User" },
     steps: [
       { name: String, date: Number, required: Boolean, completed: String },
     ],
