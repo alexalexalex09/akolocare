@@ -66,6 +66,31 @@ function showAlert(alert, error = false) {
 
 /**
  *
+ * A higher-order function that takes an array of items, a
+ * function that will be called on each item, and other parameters
+ * that will be passed through to that function. The format for the
+ * function fn is:
+ * function (item, index, extraParam1, extraParam2) {
+ *  //Some operation on item and extraParams
+ *  return HTML string
+ * }
+ *
+ * @param {Array} items the items to be iterated through
+ * @param {Function} fn the function to apply to the items
+ * @param {*} optional other parameters will be passed through
+ * @returns {String} a string of HTML
+ */
+function eachHTML(items, fn) {
+  html = "";
+  var [items, fn, ...args] = arguments;
+  items.forEach(function (item, index) {
+    html += fn(item, index, ...args);
+  });
+  return html;
+}
+
+/**
+ *
  * @param {String} title The printed title of the form
  * @param {String} htmlClass A class to apply for styling
  * @param {String} submitFunction The name of a function to call for submitting the form
@@ -96,48 +121,38 @@ function displayForm(title, htmlClass, submitFunction, items) {
   }
   //Create the form
   var htmlString = "";
-  htmlString +=
-    `
+  htmlString += `
   <div class="shadow">
-    <div class="modalForm ` +
-    htmlClass +
-    `">
-      <div class="modalFormTitle">` +
-    title +
-    `</div>
-      <div class="formElements">`;
-  items.forEach(function (item, index) {
-    //Each form label should end in a colon
-    if (item.label.substring(item.label.length - 1, item.label.length) != ":") {
-      item.label += ":";
-    }
-    htmlString +=
-      `
-      <div class="modalFormRow">      
-      <label for="` +
-      htmlClass +
-      index +
-      `">` +
-      item.label +
-      `</label>
-            <input id="` +
-      item.id +
-      `"type="` +
-      item.type +
-      `"/>
+    <div class="modalForm ${htmlClass}">
+      <div class="modalFormTitle">
+        <div class="modalFormTitleText"> ${title}</div>
+        <div class="modalFormX">🗙</div>
       </div>
-          `;
-  });
-  htmlString +=
-    `
-        <input type="submit" onclick="` +
-    submitFunction +
-    `"></input>
+      <div class="formElements">
+        ${eachHTML(items, addColon, htmlClass)}
+        <input type="submit" onclick="${submitFunction}"></input>
       </div>
     </div>
   </div>
   `;
   document.querySelector("body").innerHTML += htmlString;
+}
+
+/**
+ *
+ * @param {*} item the item from the array
+ * @param {Number} index the index of that item
+ * @param {String} htmlClass the form's html class
+ * @returns html String
+ */
+function addColon(item, index, htmlClass) {
+  if (item.label.substring(item.label.length - 1, item.label.length) != ":") {
+    item.label += ":";
+  }
+  return `<div class="modalFormRow">      
+            <label for="${htmlClass + index}">${item.label}</label>
+            <input id="${item.id}" type="${item.type}"/>
+          </div>`;
 }
 
 /**
