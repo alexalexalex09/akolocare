@@ -1,6 +1,8 @@
 #menubar
     #menuButtons
-        button#menuCreate(onclick="createCR()") + New Care Receiver
         label(for="search").hidden Search
         input(type="text" placeholder="Search")#search
+        button#menuSearch(onclick="searchCRs()") 🔍
+        button#menuCreate(onclick="createCR()") + New Care Receiver
+        button#templateCreate(onclick="createTemplate()") + New Template
         

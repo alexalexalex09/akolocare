@@ -126,26 +126,31 @@ function displayForm(title, htmlClass, submitFunction, items) {
     <div class="modalForm ${htmlClass}">
       <div class="modalFormTitle">
         <div class="modalFormTitleText"> ${title}</div>
-        <div class="modalFormX">🗙</div>
+        <div class="modalFormX" onclick="closeModal()">🗙</div>
       </div>
       <div class="formElements">
-        ${eachHTML(items, addColon, htmlClass)}
+        ${eachHTML(items, modalFormRow, htmlClass)}
         <input type="submit" onclick="${submitFunction}"></input>
       </div>
     </div>
   </div>
   `;
   document.querySelector("body").innerHTML += htmlString;
+  document.querySelectorAll(".modalFormRow")[0].querySelector("input").focus();
+}
+
+function closeModal() {
+  document.querySelector(".shadow").remove();
 }
 
 /**
- *
+ * Creates a row for the modal form, to be called by eachHTML()
  * @param {*} item the item from the array
  * @param {Number} index the index of that item
  * @param {String} htmlClass the form's html class
  * @returns html String
  */
-function addColon(item, index, htmlClass) {
+function modalFormRow(item, index, htmlClass) {
   if (item.label.substring(item.label.length - 1, item.label.length) != ":") {
     item.label += ":";
   }

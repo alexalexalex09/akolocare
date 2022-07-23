@@ -121,6 +121,16 @@ button {
   justify-content: space-evenly;
 }
 
+#mainLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img#google {
+  padding: 0px 0.4em;
+}
+
 /*******************
       Menu Bar
 ********************/
@@ -132,6 +142,10 @@ button {
 #search {
   font-size: 1.5rem;
   align-self: center;
+}
+
+#menuSearch {
+  padding: 0px 0.5em;
 }
 
 /*******************
@@ -179,7 +193,7 @@ button {
 }
 
 .modalFormRow input {
-  flex: 1;
+  flex-basis: 25em;
 }
 
 
@@ -195,13 +209,22 @@ Dashboard Main Display
 }
 
 .crRow {
-  display: flex;
-    column-gap: 5px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 4em 2em;
+  column-gap: 5px;
+  width: 100%;
 }
 
 .crRow div {
   flex: 1;
+}
+
+.crEdit, .crActions {
+  text-align: center;
+}
+
+.crEdit, .crActionsTitle {
+  cursor: pointer;
 }
 
 #crDisplayTitleRow div {
